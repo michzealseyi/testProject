@@ -1,6 +1,18 @@
 <body>
-  <button routerLink="my-orders">Order History</button>
+<div class="profile">
+<img class="profile-pics" [src]="profilePics" alt="">
+<div class="profile-details">
+  <h3>Name: <span class="name">{{userName}}</span></h3>
+  <h3>Email: <span>{{userEmail}}</span></h3>
+
+</div>
+</div>
+
+  <div class="children">
+    <button routerLink="my-orders">Placed Orders</button>
   <button routerLink="wishlist">Carts</button>
+  </div>
+  
 
   <router-outlet></router-outlet>
 </body>

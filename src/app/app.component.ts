@@ -65,6 +65,9 @@ export class AppComponent implements OnInit, ControlValueAccessor {
   stepOneForm: any;
   formValue: any;
   routeProduct: any;
+  userId: any;
+  theUser: any;
+  userName: any;
 
   constructor(
     private authService: AuthService,
@@ -92,9 +95,17 @@ export class AppComponent implements OnInit, ControlValueAccessor {
     });
     this.getProducts();
     this.writeValue();
+    this.getUserDetails();
   }
   bodyClick() {
     this.isVisible = false;
+  }
+  getUserDetails() {
+    (this.userId = Number(localStorage.getItem('user_id'))),
+      this.userService.getUsers().subscribe((res) => {
+        this.theUser = res.find((user: any) => user.user_id === this.userId);
+        this.userName = this.theUser.username;
+      });
   }
   getProducts() {
     this.userService.getProducts().subscribe((res) => {

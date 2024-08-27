@@ -27,17 +27,24 @@ main {
             grid-template-columns: 1fr auto auto auto;
           }
           @media screen and (max-width: 480px) {
-            grid-template-columns: auto auto;
+            grid-template-columns: auto auto auto;
           }
           .header-start {
-            width: 200px;
+            text-transform: capitalize;
+            display: grid;
+            justify-content: start;
+            align-items: center;
+            font-size: 25px;
+            font-weight: 600;
+            line-height: 20px;
+            margin: 0;
             cursor: pointer;
-            @media screen and (max-width: 525px) {
-              width: 150px;
+            @media screen and (max-width: 560px) {
+              font-size: 15px;
             }
-            @media screen and (max-width: 480px) {
-              display: none;
-            }
+            // @media screen and (max-width: 480px) {
+            //   // display: none;
+            // }
           }
           .header-middle {
             display: grid;
@@ -149,8 +156,14 @@ main {
                 border-radius: 5px;
                 padding: 5px;
                 position: relative;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 @media screen and (max-width: 690px) {
                   width: 150px;
+                }
+                @media screen and (max-width: 450px) {
+                  width: 100px;
                 }
               }
               button {
@@ -177,6 +190,9 @@ main {
                 @media screen and (max-width: 690px) {
                   width: 150px;
                 }
+                @media screen and (max-width: 450px) {
+                  width: 100px;
+                }
               }
               .search-dropdown-display {
                 width: 300px;
@@ -189,6 +205,9 @@ main {
                 cursor: pointer;
                 @media screen and (max-width: 690px) {
                   width: 150px;
+                }
+                @media screen and (max-width: 450px) {
+                  width: 100px;
                 }
               }
             }

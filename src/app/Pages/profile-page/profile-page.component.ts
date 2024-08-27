@@ -5,6 +5,7 @@ import { AppState } from '../../store/app.state';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { CartService } from '../../Services/cart.service';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -17,10 +18,18 @@ export class ProfilePageComponent implements OnInit {
   comparedAds = new Map<number, boolean>(); // Map to track comparison state by product ID
 
   $adsToBeCompared: Observable<any[]>;
-
+  profilePics: any = 'assets/avatar.jpg';
   newOrders: any[] = [];
   adsToBeCompared: any[] = [];
-  constructor(private store: Store, private cartService: CartService) {
+  userId: number | undefined;
+  theUser: any;
+  userName: any;
+  userEmail: any;
+  constructor(
+    private store: Store,
+    private cartService: CartService,
+    private userService: UserService
+  ) {
     this.$adsToBeCompared = this.store.select(
       AppState.getSelectedAdsForComparison
     );
@@ -48,5 +57,15 @@ export class ProfilePageComponent implements OnInit {
       this.adsToBeCompared = res || [];
     });
     console.log('comparing', this.adsToBeCompared);
+    this.getUserDetails();
+  }
+
+  getUserDetails() {
+    (this.userId = Number(localStorage.getItem('user_id'))),
+      this.userService.getUsers().subscribe((res) => {
+        this.theUser = res.find((user: any) => user.user_id === this.userId);
+        this.userName = this.theUser.username;
+        this.userEmail = this.theUser.email;
+      });
   }
 }

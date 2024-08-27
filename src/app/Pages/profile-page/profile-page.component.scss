@@ -1,14 +1,49 @@
 body {
   width: 90%;
-  margin: 50px auto;
-  button {
-    padding: 10px 20px;
-    width: 130px;
-    border-radius: 20px;
-    background: rgb(19, 19, 45);
-    color: white;
-    cursor: pointer;
-    margin-right: 20px;
-    margin-bottom: 10px;
+  margin: 40px auto;
+  .profile {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 40px;
+    justify-content: start;
+    align-items: center;
+    @media screen and (max-width: 570px) {
+      place-content: center;
+      grid-template-columns: auto;
+    }
+    margin-bottom: 40px;
+    .profile-pics {
+      background: grey;
+      border: 1px solid grey;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .profile-details {
+      h3 {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 30px;
+        span {
+          text-decoration: underline;
+        }
+        .name {
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+  .children {
+    button {
+      padding: 10px 20px;
+      width: 140px;
+      border-radius: 20px;
+      background: rgb(19, 19, 45);
+      color: white;
+      cursor: pointer;
+      margin-right: 20px;
+      margin-bottom: 10px;
+    }
   }
 }
