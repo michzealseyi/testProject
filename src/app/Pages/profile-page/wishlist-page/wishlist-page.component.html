@@ -1,0 +1,47 @@
+<body>
+  @if(adsToBeCompared.length==0){
+  <h1 class="product-container">No Available Cart.....</h1>
+  }@else {
+  <div class="product-container">
+    @for (item of adsToBeCompared; track item) {
+    <div class="adGridView">
+      <svg
+        (click)="toggleCompare($event, item)"
+        class="favouriteIcon"
+        [class.active]="isCompared(item?.product_id)"
+        width="44"
+        height="44"
+        viewBox="0 0 44 44"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="44" height="44" rx="22" fill="white" fill-opacity="0.7" />
+        <path
+          fill="#9B9CAE"
+          d="M22 31.65C21.69 31.65 21.39 31.61 21.14 31.52C17.32 30.21 11.25 25.56 11.25 18.69C11.25 15.19 14.08 12.35 17.56 12.35C19.25 12.35 20.83 13.01 22 14.19C23.17 13.01 24.75 12.35 26.44 12.35C29.92 12.35 32.75 15.2 32.75 18.69C32.75 25.57 26.68 30.21 22.86 31.52C22.61 31.61 22.31 31.65 22 31.65ZM17.56 13.85C14.91 13.85 12.75 16.02 12.75 18.69C12.75 25.52 19.32 29.32 21.63 30.11C21.81 30.17 22.2 30.17 22.38 30.11C24.68 29.32 31.26 25.53 31.26 18.69C31.26 16.02 29.1 13.85 26.45 13.85C24.93 13.85 23.52 14.56 22.61 15.79C22.33 16.17 21.69 16.17 21.41 15.79C20.48 14.55 19.08 13.85 17.56 13.85Z"
+        />
+      </svg>
+      <img [src]="item.imagePath" alt="Image" />
+
+      <div class="adDetails">
+        <div class="adTitle">{{ item.name }}</div>
+        <div class="price">${{ item.price }}</div>
+      </div>
+      <div>
+        <div class="store-compare">
+          <div>
+            <button
+              class="compare"
+              [routerLink]="'/product/' + item.product_id"
+            >
+              <span>View Product</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    }
+  </div>
+  }
+</body>

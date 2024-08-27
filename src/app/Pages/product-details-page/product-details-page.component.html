@@ -1,0 +1,187 @@
+<body>
+  <div class="modal">
+    @if (toggleEditButton) {
+    <div class="background-theme" (click)="editButtonClose()">
+      <div class="add-account" (click)="stopPropagation($event)">
+        <div class="add-account-container">
+          <form [formGroup]="orderForm">
+            <div formArrayName="items">
+              <div
+                *ngFor="let item of items.controls; let i = index"
+                [formGroupName]="i"
+              >
+                <div class="prod-name">
+                  <label> <strong>Product:</strong></label>
+                  <div (change)="onProductChange(i)">
+                    {{ selectedProductt.name }}
+                  </div>
+                </div>
+
+                <div class="prod-qty">
+                  <label> <strong>Quantity:</strong></label>
+                  <input
+                    formControlName="quantity"
+                    type="number"
+                    (input)="onQuantityChange(i)"
+                  />
+                  @if(item.get('quantity')?.invalid){
+                  <div class="qty">Quantity is Required</div>
+                  }
+                </div>
+              </div>
+            </div>
+            <h2>
+              <strong>Total:</strong> <span>{{ grandTotal | currency }}</span>
+            </h2>
+
+            <button type="submit" (click)="updatedOrder()">Submit Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    }
+    <div>
+      @if (successButton) {
+      <div class="background-theme" (click)="successClose()">
+        <div class="success-account" (click)="stopPropagation($event)">
+          <div class="success-container">
+            <div>
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 64 64"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_7901_69004)">
+                  <circle
+                    cx="32"
+                    cy="32"
+                    r="31.749"
+                    stroke="#F5F6FA"
+                    stroke-width="0.501961"
+                  />
+                  <path
+                    d="M55.132 10.9931C60.1797 16.5514 63.0572 23.7414 63.238 31.2474C63.4188 38.7534 60.8909 46.0736 56.1168 51.8685C51.3427 57.6634 44.6416 61.5456 37.2397 62.8046C29.8378 64.0636 22.2301 62.6154 15.8085 58.7248C9.38692 54.8342 4.58093 48.7615 2.26993 41.6178C-0.0410813 34.4741 0.29742 26.7371 3.22349 19.8225C6.14956 12.9079 11.4675 7.27815 18.2044 3.96326C24.9412 0.648367 32.6463 -0.129957 39.91 1.7707"
+                    stroke="#1F7B5E"
+                    stroke-width="1.50588"
+                  />
+                  <g clip-path="url(#clip1_7901_69004)">
+                    <circle
+                      cx="31.9999"
+                      cy="32.0009"
+                      r="28.9032"
+                      fill="#1F7B5E"
+                    />
+                    <path
+                      d="M22.9678 32.2641L28.6499 37.9462L39.9849 26.582"
+                      stroke="white"
+                      stroke-width="4.37084"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                </g>
+                <defs>
+                  <clipPath id="clip0_7901_69004">
+                    <rect width="64" height="64" fill="white" />
+                  </clipPath>
+                  <clipPath id="clip1_7901_69004">
+                    <rect
+                      width="57.8064"
+                      height="57.8064"
+                      fill="white"
+                      transform="translate(3.09668 3.09766)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <div class="success-cont1">Order Submitted successfully!</div>
+            <div class="success-cont2">
+              Your Order Has Been Submitted For Review
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="prod-cont">
+    <div class="prod-left">
+      <img [src]="selectedProductt?.imagePath" alt="" />
+      <div class="prod-btn">
+        <button (click)="editButton()">place order</button>
+      </div>
+    </div>
+    <div class="prod-right">
+      <div class="prod-name">{{ selectedProductt?.name }}</div>
+      <nz-rate [ngModel]="selectedProductt?.rating" nzDisabled></nz-rate>
+
+      <div class="prod-desc">Description</div>
+      <div class="desc-content">
+        {{ selectedProductt?.description }}
+      </div>
+      <div class="price">
+        Price: <span>{{ selectedProductt?.price | currency }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="other-products">
+    <h1>Related Products</h1>
+    @if(newOtherProducts.length == 0){
+    <h1 class="product-container">No Available Related Product.....</h1>
+    }@else {
+    <div class="product-container">
+      @for (item of newOtherProducts; track item.product_id) {
+      <div class="adGridView">
+        <svg
+          (click)="toggleCompare($event, item)"
+          class="favouriteIcon"
+          [class.active]="isCompared(item?.product_id)"
+          width="44"
+          height="44"
+          viewBox="0 0 44 44"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            width="44"
+            height="44"
+            rx="22"
+            fill="white"
+            fill-opacity="0.7"
+          />
+          <path
+            fill="#9B9CAE"
+            d="M22 31.65C21.69 31.65 21.39 31.61 21.14 31.52C17.32 30.21 11.25 25.56 11.25 18.69C11.25 15.19 14.08 12.35 17.56 12.35C19.25 12.35 20.83 13.01 22 14.19C23.17 13.01 24.75 12.35 26.44 12.35C29.92 12.35 32.75 15.2 32.75 18.69C32.75 25.57 26.68 30.21 22.86 31.52C22.61 31.61 22.31 31.65 22 31.65ZM17.56 13.85C14.91 13.85 12.75 16.02 12.75 18.69C12.75 25.52 19.32 29.32 21.63 30.11C21.81 30.17 22.2 30.17 22.38 30.11C24.68 29.32 31.26 25.53 31.26 18.69C31.26 16.02 29.1 13.85 26.45 13.85C24.93 13.85 23.52 14.56 22.61 15.79C22.33 16.17 21.69 16.17 21.41 15.79C20.48 14.55 19.08 13.85 17.56 13.85Z"
+          />
+        </svg>
+        <img [src]="item.imagePath" alt="Image" />
+
+        <div class="adDetails">
+          <div class="adTitle">{{ item.name }}</div>
+          <div class="price">${{ item.price }}</div>
+        </div>
+        <div>
+          <div class="store-compare">
+            <div>
+              <button
+                (click)="newProduct(item.product_id)"
+                class="compare"
+                [routerLink]="'/product/' + item.product_id"
+              >
+                <span>View Product</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      }
+    </div>
+    }
+  </div>
+</body>

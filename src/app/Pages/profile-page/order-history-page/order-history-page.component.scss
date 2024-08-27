@@ -1,0 +1,68 @@
+body {
+  width: 100%;
+  height: 100%;
+  background: white;
+  padding-bottom: 50px;
+  .order-info {
+    width: 90%;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    gap: 30px;
+    @media screen and (max-width: 650px) {
+        grid-template-columns: auto;
+        place-content: center;
+      }
+    .order-left {
+      button {
+        margin-top: 10px;
+        display: block;
+        padding: 5px;
+        border-radius: 5px;
+        background: rgb(19, 19, 45);
+        color: white;
+      }
+      img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    }
+    .order-right {
+      > h2 {
+        margin: 0;
+        span {
+        }
+      }
+      > div {
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 20px;
+        margin-bottom: 5px;
+        span {
+          color: red;
+        }
+      }
+    }
+  }
+  .grand {
+    width: 100%;
+    display: grid;
+    place-content: center;
+    grid-template-columns: auto auto;
+    strong {
+      font-size: 30px;
+      // font-weight: 400;
+      // line-height: 20px;
+    }
+    div {
+      display: grid;
+      place-content: center;
+      color: red;
+      padding-left: 5px;
+      font-size: 30px;
+    }
+  }
+}

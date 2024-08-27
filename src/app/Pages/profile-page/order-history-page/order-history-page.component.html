@@ -1,0 +1,42 @@
+<body>
+  @if(userOrders.length > 0){
+  <div>
+    @for(order of userOrders; track $index){
+    <div class="order-info">
+      <div class="order-left">
+        <img [src]="order.image" alt="" />
+        @if(order.status ==='Placed' ){
+        <button (click)="deleteOrder(order?.order_id)">Delete Order</button>
+        }
+      </div>
+      <div class="order-right">
+        <h2>
+          <strong>Product name:</strong> <span> {{ order.name }}</span>
+        </h2>
+        <div>
+          @for(item of order.items; track $index){
+          <div class="qty">
+            <strong>Quantity:</strong>
+            {{ item.quantity }}
+          </div>
+          }
+        </div>
+        <div><strong>Status:</strong> {{ order.status }}</div>
+        <div>
+          <strong>Total Price:</strong> <span>{{ order.total_price | currency}}</span>
+        </div>
+      </div>
+    </div>
+    }
+    <h1 class="grand">
+      <strong>Grand Total:</strong> <div>{{ grandTotal | currency}}</div>
+    </h1>
+  </div>
+  }
+  <div>
+    @if(userOrders.length === 0){
+    <h1>No orders found for this user.....</h1>
+
+    }
+  </div>
+</body>
