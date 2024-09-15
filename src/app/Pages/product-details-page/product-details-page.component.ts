@@ -78,10 +78,14 @@ export class ProductDetailsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productId = Number(this.activatedRoute.snapshot.params['product_id']);
-    this.getProducts(this.productId);
-    console.log('test', this.productId);
+    // this.productId = Number(this.activatedRoute.snapshot.params['product_id']);
+    // this.getProducts(this.productId);
+    // console.log('test', this.productId);
+    this.activatedRoute.params.subscribe(params => {
+      this.productId = Number(params['product_id']);
+      this.getProducts(this.productId);
 
+    });
     this.orderForm = this.fb.group({
       items: this.fb.array([]), // Initialize as an empty array
     });
@@ -89,10 +93,14 @@ export class ProductDetailsPageComponent implements OnInit {
       ads.forEach((ad) => this.comparedAds.set(ad.product_id, true));
     });
   }
-  newProduct(id: any) {
-    this.router.navigate(['/product', id]).then(() => {
-      window.location.reload();
-    });
+  // newProduct(id: any) {
+  //   this.router.navigate(['/product', id]).then(() => {
+  //   });
+  // }
+
+  async newProduct(id: any) {
+    await this.router.navigate(['/product', id]);
+    window.scrollTo(0, -1000); // Scroll to the top after navigation is complete
   }
   images = [
     { imagePath: 'assets/smart phone.jpg' },
