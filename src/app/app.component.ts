@@ -102,6 +102,8 @@ export class AppComponent implements OnInit, ControlValueAccessor {
   }
   getUserDetails() {
     (this.userId = Number(localStorage.getItem('user_id'))),
+    console.log('userID',this.userId );
+    
       this.userService.getUsers().subscribe((res) => {
         this.theUser = res.find((user: any) => user.user_id === this.userId);
         this.userName = this.theUser.username;
@@ -148,7 +150,7 @@ export class AppComponent implements OnInit, ControlValueAccessor {
     this.router
       .navigate(['/product', this.routeProduct.product_id])
       .then(() => {
-        window.location.reload();
+        // window.location.reload();
       });
   }
 

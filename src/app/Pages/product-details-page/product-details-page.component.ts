@@ -10,7 +10,7 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import {
   FormArray,
@@ -70,7 +70,9 @@ export class ProductDetailsPageComponent implements OnInit {
     private store: Store,
     public dialog: MatDialog,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private viewportScroller: ViewportScroller,
+
   ) {
     this.$adsToBeCompared = this.store.select(
       AppState.getSelectedAdsForComparison
@@ -81,11 +83,12 @@ export class ProductDetailsPageComponent implements OnInit {
     // this.productId = Number(this.activatedRoute.snapshot.params['product_id']);
     // this.getProducts(this.productId);
     // console.log('test', this.productId);
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe((params) => {
       this.productId = Number(params['product_id']);
       this.getProducts(this.productId);
-
+      
     });
+
     this.orderForm = this.fb.group({
       items: this.fb.array([]), // Initialize as an empty array
     });
@@ -100,7 +103,10 @@ export class ProductDetailsPageComponent implements OnInit {
 
   async newProduct(id: any) {
     await this.router.navigate(['/product', id]);
-    window.scrollTo(0, -1000); // Scroll to the top after navigation is complete
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.viewportScroller.scrollToPosition([0, 0]); // Scroll to the top
+      }});
   }
   images = [
     { imagePath: 'assets/smart phone.jpg' },
@@ -253,10 +259,9 @@ export class ProductDetailsPageComponent implements OnInit {
 
         this.store.dispatch(new AddOrder(payload2));
         this.resetForm();
-
       });
-    }else{
-      console.log('not submitted')
+    } else {
+      console.log('not submitted');
     }
   }
 
